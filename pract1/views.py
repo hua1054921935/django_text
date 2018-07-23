@@ -8,26 +8,23 @@ import time
 # Create your views here.
 class Meyhod(View):
     def get(self,request):
-        n = 36
+        n = 500
         # 初始坐标
         pos = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
-
-        line_list1 = []
-        list1 = []
         r = 4
         d = 1
         count = 0
         res = {}
         node_id = 1
         top_json = {}
-        host = []
+
         middle_point = [0, 0, 0]
         firewall = []
         ips = []
         ids = []
         router = []
         server = []
-        switch = []
+
 
         top_json['firewall'] = firewall
         top_json['ips'] = ips
@@ -35,51 +32,66 @@ class Meyhod(View):
         top_json['middle_point']=middle_point
         top_json['router'] = router
         top_json['server'] = server
-
+        nodes_list1 = []
+        nodes_list2 = []
+        index = [1, 5, n*4-3, n*4+1]
         for k in range(1, 18):
-            # print(i)
             y = r * k
-            nodes_list1 = []
             if k == 1:
                 for i in range(1, n):
                     for j in range(1, n):
                         for s in range(len(pos)):
-                            nodes_list1.append([node_id, 'host', i * pos[s][0], y, j * pos[s][1], 0.9])
+                            nodes_list2.append([i * pos[s][0], y, j * pos[s][1]])
+                            nodes_list1.append([str(node_id), 'host', i * pos[s][0], y, j * pos[s][1], 0.9])
                             # nodes_list1.append([node_id + 1, 'host', i * pos[s][0], y, -j * pos[s][1], 0.9])
                             # nodes_list1.append([node_id + 2, 'host', -i * pos[s][0], y, j * pos[s][1], 0.9])
                             # nodes_list1.append([node_id + 3, 'host', -i * pos[s][0], y, -j * pos[s][1], 0.9])
                             count += 1
-                            node_id += 4
+                            node_id += 1
                             top_json['host'] = nodes_list1
+
             else:
+
                 yb = r * (k - 1)
                 for i in range(1, n):
                     for j in range(1, n):
                         for s in range(len(pos)):
-                            switch.append([node_id, 'switch', pos[s][0] * (d * (i - 0.5) + 0.5), y,
-                                           (d * (j - 0.5) + 0.5) * pos[s][1], 0.9,"lvmy",3802,[]])
-                            line_list1.append([pos[s][0] * (d * (i - 0.5) + 0.5), y, (d * (j - 0.5) + 0.5) * pos[s][1]])
-                            line_list1.append(
-                                [pos[s][0] * (d * (i - 0.25) + 0.5), yb, (d * (j - 0.25) + 0.5) * pos[s][1]])
+                            nodes_list2.append([pos[s][0] * (d * (i - 0.5) + 0.5), y,
+                                           (d * (j - 0.5) + 0.5) * pos[s][1]])
+                            nodes_list1.append(
+                                [str(node_id),
+                                 'switch',
+                                 pos[s][0] * (d * (i - 0.5) + 0.5),
+                                 y,
 
-                            line_list1.append([pos[s][0] * (d * (i - 0.5) + 0.5), y, (d * (j - 0.5) + 0.5) * pos[s][1]])
-                            line_list1.append(
-                                [pos[s][0] * (d * (i - 0.25) + 0.5), yb, (d * (j - 0.75) + 0.5) * pos[s][1]])
+                                (d * (j - 0.5) + 0.5) * pos[s][1],
+                                 0.9,
+                                 "lvmy",
+                                 3802,
+                                 [],
 
-                            line_list1.append([pos[s][0] * (d * (i - 0.5) + 0.5), y, (d * (j - 0.5) + 0.5) * pos[s][1]])
-                            line_list1.append(
-                                [pos[s][0] * (d * (i - 0.75) + 0.5), yb, (d * (j - 0.75) + 0.5) * pos[s][1]])
-
-                            line_list1.append([pos[s][0] * (d * (i - 0.5) + 0.5), y, (d * (j - 0.5) + 0.5) * pos[s][1]])
-                            line_list1.append(
-                                [pos[s][0] * (d * (i - 0.75) + 0.5), yb, (d * (j - 0.25) + 0.5) * pos[s][1]])
+                                 [str(index[0]), str(index[1]), str(index[2]), str(index[3])]])
+                            # index=[str(index[0]+1),str(index[1]+1),str(index[2]+1),str(index[3]+1)]
+                            if index[0] % 4 == 0:
+                                index = [index[0] + 5, index[0] + 9, index[2] + 5, index[2] + 9]
+                            else:
+                                index = [index[0] + 1, index[0] + 5, index[2] + 1, index[3] + 1]
+#                             x=[str(nodes_list2.index([pos[s][0] * (d * (i - 0.5) + 0.5)-0.5, y-4,(d * (j - 0.5) + 0.5) * pos[s][1]-0.5])+1),
+# str(nodes_list2.index([pos[s][0] * (d * (i - 0.5) + 0.5)-0.5, y-4,(d * (j - 0.5) + 0.5) * pos[s][1]+0.5])+1),
+# str(nodes_list2.index([pos[s][0] * (d * (i - 0.5) + 0.5)+0.5, y-4,(d * (j - 0.5) + 0.5) * pos[s][1]-0.5])+1),
+# str(nodes_list2.index([pos[s][0] * (d * (i - 0.5) + 0.5)+0.5, y-4,(d * (j - 0.5) + 0.5) * pos[s][1]+0.5])+1)]
+#                             print(x)
                             count += 1
                             node_id += 1
-                            top_json['switch'] = switch
+                            top_json['host'] = nodes_list1
+
             n = int(n * 0.5)
             d = d * 2
         res['top_json']=top_json
+        res['number']=count
+        print(count)
         return JsonResponse(res)
+
 
     def post(self, request):
         pass
@@ -102,11 +114,11 @@ class Meyhod1(View):
 
     def post(self, request):
         pass
-# # class Ms(View):
-# #     def get(self):
-# #
-# #         res={'flag':False}
-# #         # return HttpResponse(res)
+# class Ms(View):
+#     def get(self):
+#
+#         res={'flag':False}
+#         # return HttpResponse(res)
 
 def get_case_data(request):
     # 先从缓存中读取数据
@@ -156,7 +168,7 @@ def get_case_data(request):
                     INNER JOIN b_case c on c.case_id=b.case_id
                     GROUP BY
                         b.case_id
-                    
+
                     ORDER BY value desc
                     LIMIT 10
                     """
@@ -174,7 +186,7 @@ def get_case_data(request):
                     GROUP BY
                         machine_name
                     ORDER BY
-                    
+
                     value
                         DESC
                     LIMIT 10"""
