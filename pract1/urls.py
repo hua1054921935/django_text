@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 
-from pract1.views import Meyhod1,Meyhod
+from pract1.views import Meyhod1,Meyhod,large
 urlpatterns = [
     url(r'^method/', Meyhod.as_view(),name='method'),
-url(r'^method1/', Meyhod1.as_view(),name='method1'),
+    url(r'^method1/', Meyhod1.as_view(),name='method1'),
+    url(r'create_topology/',large,name='create_topology')
 ]

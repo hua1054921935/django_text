@@ -49,7 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'utils.case.Middleware_common',
+    'utils.07.Middleware_common',
 )
 
 ROOT_URLCONF = 'django_text.urls'
@@ -76,22 +76,22 @@ WSGI_APPLICATION = 'django_text.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bc',
-        'HOST': '39.107.112.244',
-        'PORT': '3306',
-        'USER': 'python',
-        'PASSWORD': '123456'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bc',
+#         'HOST': '39.107.112.244',
+#         'PORT': '3306',
+#         'USER': 'python',
+#         'PASSWORD': '123456'
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
